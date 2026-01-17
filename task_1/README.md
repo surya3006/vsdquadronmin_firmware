@@ -1,38 +1,49 @@
-UNDERSTANDING OF TASK_1
-GPIO_H: It is a header file, it act as library or it act as a blueprint which tells main function what tools are available with revelaling complex details of hardware.
-	Header Guard (ifndef GPIO_H .. #endif): 
-	-> Concept: These line prevents compiler from including the same file twice 
-	Macros (#define GPIO_OUTPUT 1, #define GPIO_INPUT 0): 
-	->Concept: This is use to define hardcoded value which maps the value to readable name which tells about the functionality of value.
-	Function Prototype (void gpio_init ..):
-	->Concept: This tells compiler that this function exists somewhere, and allows main function to call them even though actual code is in different file
+# Firmware Task 1: GPIO Driver Simulation
 
-GPIO_C: It is a source or driver file, this file contains the real implementation
-	1. gpio_init: This function enables LED or Button signal for the specific port and set specific bits in a "Direction Register" to configure pin as Input as Output.
-	2. gpio_write: This would write 1 (High Voltage) or 0 (Low Voltage) to an "Output Data Register".
-	3. gpio_read: This would read the status of an "Input Data Register" to see if a button is pressed or not.  
+This project demonstrates the architecture of a **Hardware Abstraction Layer (HAL)** in C. It simulates a firmware environment where the Application Layer is separated from the Hardware Driver Layer.
 
-MAIN_C: It is a Application Program. This is where the user behavior is defined
-	1. "#include gpio.h":  This connects the application to a custom library.
-	2. "gpio_write(LED_PIN, 1): Turn the LED ON.
-	3. "int button_state = gpio_read(BTN_PIN)" : Check the button status.
-	4. "gpio_write(LED_PIN, 0)": This would turn the LED OFF.
+## 📂 Project Structure
+
+### 1. Header File (`gpio.h`)
+Acts as the **blueprint** or public interface. It tells the main function what tools are available without revealing the complex details of the hardware.
+
+* **Header Guards (`#ifndef GPIO_H` ...):**
+    * *Concept:* Prevents the compiler from including the same file twice, which avoids definition errors.
+* **Macros (`#define GPIO_OUTPUT 1`):**
+    * *Concept:* Replaces "magic numbers" with readable names (e.g., using `GPIO_OUTPUT` instead of `1`), making the code easier to understand and maintain.
+* **Function Prototypes (`void gpio_init...`):**
+    * *Concept:* Acts as a promise to the compiler that these functions exist somewhere else. This allows the `main` function to call them even though the actual code is in a different file.
+
+### 2. Driver File (`gpio.c`)
+Acts as the **source** or **driver**. This file contains the actual implementation of the hardware logic.
+
+* **`gpio_init`**: Simulates enabling the clock for a specific port and setting bits in a "Direction Register" to configure a pin as Input or Output.
+* **`gpio_write`**: Simulates writing a `1` (High Voltage) or `0` (Low Voltage) to an "Output Data Register".
+* **`gpio_read`**: Simulates reading the status of an "Input Data Register" to check if an external button is pressed.
+
+### 3. Application Program (`main.c`)
+Contains the **high-level user logic**. This file defines the behavior of the device using the tools provided by the driver.
+
+* **`#include "gpio.h"`**: Connects the application to the custom driver library.
+* **Logic Flow**:
+    1.  Initializes the LED and Button.
+    2.  Turns the LED **ON**.
+    3.  Reads the status of the Button.
+    4.  Turns the LED **OFF**.
+
+---
+
+## 🚀 How to Build and Run
+
+Follow these steps to compile the simulation on your local machine.
+
+### Prerequisites
+* GCC Compiler (e.g., MinGW for Windows, or standard GCC on Mac/Linux)
 
 ### Step 1: Build the Code
-
-From inside the `task1` directory, run:
+Navigate to the project directory in your terminal and run:
 
 ```bash
 gcc main.c gpio.c -o task1_demo
-````
-
----
-
-### Step 2: Run the Program
-
-```bash
 ./task1_demo
-```
-
----
 
