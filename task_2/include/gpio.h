@@ -11,5 +11,9 @@
 
 void GPIO_Config(void);
 void Toggle_LED(void);
+void Delay_Init(void);
+void Delay_Ms(uint32_t n);
+void gpio_set(void);
+void gpio_reset(void);
 
 #endif /* __GPIO_H */

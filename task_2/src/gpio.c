@@ -1,7 +1,5 @@
 #include "gpio.h"
-
-/* Global Variable for LED Status */
-uint8_t ledState = 0;
+#include "uart.h"
 
 void GPIO_Config(void)
 {
@@ -38,12 +36,25 @@ void GPIO_Config(void)
 	GPIO_Init(BLINKY_GPIO_PORT, &GPIO_InitStructure);
 }
 
+// TO write to the GPIO pin to set it high
+void gpio_set(void){
+    GPIO_SetBits(BLINKY_GPIO_PORT, BLINKY_GPIO_PIN);
+}
+
+// To write to the GPIO pin to set it low
+void gpio_reset(void){
+    GPIO_ResetBits(BLINKY_GPIO_PORT, BLINKY_GPIO_PIN);
+}
 void Toggle_LED(void)
 {
     while (1)
 	{
-		GPIO_WriteBit(BLINKY_GPIO_PORT, BLINKY_GPIO_PIN, ledState);
-		ledState ^= 1; // invert for the next run
-		Delay_Ms(50);
+		gpio_set();
+        USART1_SendString("LED ON\r\n");
+		Delay_Ms(500);
+
+        gpio_reset();
+        USART1_SendString("LED OFF\r\n");
+        Delay_Ms(500);
 	}
 }

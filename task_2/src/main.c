@@ -56,9 +56,9 @@ int main(void)
     USART_Print_Init(115200);
     // Print boot information
     Print_Boot_Info();
-
+    
     char buffer[10]; // Buffer to hold the converted number string
-
+    Delay_Init();
     // 2. Loop from 1 to 10
     for(int i = 1; i <= 10; i++)
     {
@@ -73,27 +73,28 @@ int main(void)
 
         // Delay to make it readable
         Delay_Ms(500);
+        
     }
-
+    Toggle_LED();
     USART1_SendString("Done!\r\n");
 
-    while(1) // Infinite Loop: Never leave this!
-    {
-        // 1. Constantly ask: "Is the button pressed?"
-        if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == 0)
-        {
-            // 2. Button was pressed! Do the work.
-            USART1_SendString("Button Pressed!\r\n");
-            Toggle_LED();
+    // while(1) // Infinite Loop: Never leave this!
+    // {
+    //     // 1. Constantly ask: "Is the button pressed?"
+    //     if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == 0)
+    //     {
+    //         // 2. Button was pressed! Do the work.
+    //         USART1_SendString("Button Pressed!\r\n");
+    //         Toggle_LED();
 
-            // 3. WAIT for the user to let go of the button
-            while(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == 0)
-            {
-                // Do nothing, just wait for release
-            }
+    //         // // 3. WAIT for the user to let go of the button
+    //         // while(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == 0)
+    //         // {
+    //         //     // Do nothing, just wait for release
+    //         // }
 
-            // 4. Slight delay to handle mechanical bounce (Debounce)
-            Delay_Ms(50);
-        }
-    }
+    //         // // 4. Slight delay to handle mechanical bounce (Debounce)
+    //         // Delay_Ms(50);
+    //     }
+    //}
 }
