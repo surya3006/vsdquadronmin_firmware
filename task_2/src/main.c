@@ -87,8 +87,6 @@ int main(void)
             Toggle_LED();
 
             // 3. WAIT for the user to let go of the button
-            // If we don't do this, the loop runs so fast it might
-            // toggle the LED 100 times in a split second.
             while(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == 0)
             {
                 // Do nothing, just wait for release
@@ -97,7 +95,5 @@ int main(void)
             // 4. Slight delay to handle mechanical bounce (Debounce)
             Delay_Ms(50);
         }
-
-        // 5. Loop repeats and goes back to step 1
     }
 }
