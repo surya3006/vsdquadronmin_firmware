@@ -77,24 +77,4 @@ int main(void)
     }
     Toggle_LED();
     USART1_SendString("Done!\r\n");
-
-    // while(1) // Infinite Loop: Never leave this!
-    // {
-    //     // 1. Constantly ask: "Is the button pressed?"
-    //     if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == 0)
-    //     {
-    //         // 2. Button was pressed! Do the work.
-    //         USART1_SendString("Button Pressed!\r\n");
-    //         Toggle_LED();
-
-    //         // // 3. WAIT for the user to let go of the button
-    //         // while(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0) == 0)
-    //         // {
-    //         //     // Do nothing, just wait for release
-    //         // }
-
-    //         // // 4. Slight delay to handle mechanical bounce (Debounce)
-    //         // Delay_Ms(50);
-    //     }
-    //}
 }
